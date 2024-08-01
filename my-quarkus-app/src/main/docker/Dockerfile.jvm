@@ -1,7 +1,7 @@
 # Etapa 1: Construir o artefato
 FROM maven:3.8.4-openjdk-17 AS build
 COPY my-quarkus-app/pom.xml /workspace/
-COPY src /workspace/src
+COPY my-quarkus-app/src /workspace/src
 WORKDIR /workspace
 RUN mvn clean package -DskipTests
 
