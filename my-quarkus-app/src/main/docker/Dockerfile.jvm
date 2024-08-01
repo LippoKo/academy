@@ -1,0 +1,15 @@
+# Etapa 1: Construir o artefato
+FROM maven:3.8.4-openjdk-17 AS build
+COPY pom.xml /workspace/
+COPY src /workspace/src
+WORKDIR /workspace
+RUN mvn clean package -DskipTests
+
+# Etapa 2: Criar a imagem final
+FROM openjdk:17-jdk-slim
+WORKDIR /work/
+COPY --from=build /workspace/target/quarkus-app/lib/ /work/lib/
+COPY --from=build /workspace/target/quarkus-app/*.jar /work/
+COPY --from=build /workspace/target/quarkus-app/app/ /work/app/
+COPY --from=build /workspace/target/quarkus-app/quarkus/ /work/quarkus/
+ENTRYPOINT ["java", "-jar", "/work/quarkus-run.jar"]
