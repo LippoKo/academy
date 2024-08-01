@@ -32,7 +32,7 @@ jobs:
       run: mvn -B package --file my-quarkus-app/pom.xml
 
     - name: Build Docker Image
-      run: docker build . --file my-quarkus-app/src/main/docker/Dockerfile.jvm -tag academy:$(date +%s)
+      run: docker build . --file my-quarkus-app/src/main/docker/Dockerfile.jvm --tag academy:$(date +%s)
 
     - name: List Docker Images
       run: docker images
